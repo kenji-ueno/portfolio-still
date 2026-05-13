@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
+/* =========================================================
+   STILL — Design Tokens
+   モックv2 (still_lp_mock_v2.html) からの移植
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---- 配色(ライト) ---- */
+  --base: #F7F5F0;          /* オフホワイト・背景全般 */
+  --base-2: #EFEBE2;        /* ベージュ・変化点 (Concept/Voice) */
+  --ink: #1F1D1A;           /* チャコール・主役テキスト */
+  --ink-2: #4A453E;         /* チャコール薄・本文補助 */
+  --ink-3: #8A8276;         /* キャプション・弱いテキスト */
+  --brass: #9C8856;         /* くすみブラス・アクセント */
+  --brass-dark: #7A6940;    /* ブラス濃・hover用 */
+  --line: rgba(31, 29, 26, 0.12);
+  --line-strong: rgba(31, 29, 26, 0.24);
+
+  /* ---- フォント family エイリアス ----
+     next/font が --font-cormorant 等を自動でセットしている前提。
+     コンポーネント側からは下記の論理名で参照できるようにしておく。 */
+  --serif-en: var(--font-cormorant), 'Cormorant Garamond', serif;
+  --serif-jp: var(--font-noto-serif-jp), 'Noto Serif JP', serif;
+  --sans-en:  var(--font-inter), 'Inter', sans-serif;
+  --sans-jp:  var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* ---- 配色(ダーク・OS設定追従) ---- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --base: #15130F;
+    --base-2: #1E1B16;
+    --ink: #E8E5DC;
+    --ink-2: #BAB4A6;
+    --ink-3: #7A7468;
+    --brass: #B8A06B;
+    --brass-dark: #9C8856;
+    --line: rgba(232, 229, 220, 0.14);
+    --line-strong: rgba(232, 229, 220, 0.28);
   }
 }
 
+/* ---- Tailwind v4 用 @theme ブリッジ ----
+   これを書いておくと bg-base / text-ink / border-line / font-serif-en など
+   Tailwindのユーティリティとして使えるようになる(任意の値で逃げる必要が減る) */
+@theme inline {
+  --color-base: var(--base);
+  --color-base-2: var(--base-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-brass: var(--brass);
+  --color-brass-dark: var(--brass-dark);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --font-serif-en: var(--serif-en);
+  --font-serif-jp: var(--serif-jp);
+  --font-sans-en:  var(--sans-en);
+  --font-sans-jp:  var(--sans-jp);
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--base);
+  color: var(--ink);
+  font-family: var(--sans-en), var(--sans-jp);
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
 }
